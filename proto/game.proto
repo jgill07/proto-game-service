@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package game;
+
+option go_package = "github.com/jgill07/proto-game-service/gen/go/game";
+
+// Service definition
+service GameService {
+    // Get artist by ID
+    rpc GetGameById(GetGameRequest) returns (GetGameResponse);
+    // Create a new game
+    rpc CreateGame(CreateGameRequest) returns (GetGameResponse);
+    // List all games
+    rpc ListGames(ListGamesRequest) returns (ListGamesResponse);
+
+    // Streaming all games
+    rpc ListGamesStream(ListGamesRequest) returns (stream Game);
+
+    rpc UploadGames(stream CreateGameRequest) returns (UploadGameResponse);
+}
+
+message Game {
+    string id = 1;
+    string name = 2;
+    string display_name = 3;
+    string bio = 4;
+}
+
+message GetGameRequest {
+    string id = 1;
+}
+
+message GetGameResponse {
+    Game game = 1;
+}
+
+message CreateGameRequest {
+    string name = 1;
+    string display_name = 2;
+    string bio = 3;
+}
+
+message ListGamesRequest {
+   
+}
+
+message ListGamesResponse {
+    repeated Game games = 1;
+}
+
+message UploadGameResponse {
+    int32 count = 1;
+}
